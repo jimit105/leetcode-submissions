@@ -1,3 +1,7 @@
+# Approach 2 - Fast and Slow Pointer
+
+# Time: O(n), Space: O(1)
+
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -12,4 +16,3 @@ class Solution:
             fast = fast.next.next
             
         return slow
-        

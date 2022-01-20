@@ -1,20 +1,26 @@
-# Approach 3 - Sliding Window Optimized (using Hash Table/dict)
+# Approach 2 - Sliding Window
+
+from collections import defaultdict
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        n = len(s)
+        chars = defaultdict(int)
+        
+        left = right = 0
         res = 0
         
-        # store the current index of char
-        mp = {}
-        
-        i = 0
-        for j in range(n):
-            if s[j] in mp:
-                i = max(mp[s[j]], i)
-                
-            res = max(res, j-i+1)
-            mp[s[j]] = j+1
+        while right < len(s):
+            r = s[right]
+            chars[r] += 1
+            
+            while chars[r] > 1:
+                l = s[left]
+                chars[l] -= 1
+                left += 1
+            
+            res = max(res, right - left + 1)
+            
+            right += 1
             
         return res
-            
+        

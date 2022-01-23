@@ -1,3 +1,8 @@
+# Approach 1 - Stack
+
+# Time: O(n)
+# Space: O(n)
+
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
@@ -6,8 +11,7 @@ class Solution:
                     ']':'[',
                     '}':'{'}
         
-        for char in s:
-            
+        for char in s:            
             # check if is it closing bracket
             if char in mappings:
                 
@@ -15,15 +19,11 @@ class Solution:
                 last_element = stack.pop() if stack else '#'
                 
                 if mappings[char] != last_element:
-                    return False
-                
+                    return False                
                 
             # its char in opening bracket, append to stack
             else:
-                stack.append(char)
-            
-            
-                
+                stack.append(char)              
                 
         # if still there are elements in the stack, then return False
         return not stack

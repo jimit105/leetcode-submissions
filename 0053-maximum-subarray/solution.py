@@ -1,3 +1,8 @@
+# Approach 2 - Dynamic Programming
+
+# Time: O(N)
+# Space: O(1)
+
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         current_subarray = max_subarray = nums[0]

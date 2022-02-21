@@ -1,9 +1,15 @@
+# Approach 3 - One-pass Hash Table
+
+# Time: O(N)
+# Space: O(N)
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hashMap = {}
+        hashmap = dict() # value: index
+        
         for i in range(len(nums)):
-            curr = nums[i]
-            diff = target - curr
-            if diff in hashMap:
-                return [hashMap[diff], i]
-            hashMap[curr] = i
+            complement = target - nums[i]
+            if complement in hashmap:
+                return [i, hashmap[complement]]
+            
+            hashmap[nums[i]] = i

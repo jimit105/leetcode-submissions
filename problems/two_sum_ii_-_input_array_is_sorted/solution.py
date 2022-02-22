@@ -1,5 +1,8 @@
 # Approach 1 - Two Pointers
 
+# Time: O(N)
+# Space: O(1)
+
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
         n = len(numbers)
@@ -15,5 +18,5 @@ class Solution:
             else:
                 right -= 1
                 
-        return [-1, 1]
+        return [-1, -1]
         

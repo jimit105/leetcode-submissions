@@ -1,5 +1,8 @@
 # Approach 2 - Bit Manipulation Trick
 
+# Time: O(n)
+# Space: O(1)
+
 class Solution:
     def hammingWeight(self, n: int) -> int:
         count = 0

@@ -1,7 +1,7 @@
-# Approach 1 - Recursion
-
-# Time: O(n+m)
-# Space: O(n+m)
+# Approach 1: Recursion
+    
+# Time: O(n + m)
+# Space: O(n + m)
 
 # Definition for singly-linked list.
 # class ListNode:
@@ -11,6 +11,7 @@
 
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        
         if list1 is None:
             return list2
         elif list2 is None:

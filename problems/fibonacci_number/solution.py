@@ -1,16 +1,8 @@
-# Approach 3 - Top-Down Approach using Memoization
-
-# Time: O(N)
-# Space: O(N)
+from functools import lru_cache
 
 class Solution:
-    cache = {0: 0, 1: 1}
     
+    @lru_cache
     def fib(self, n: int) -> int:
-        if n in self.cache:
-            return self.cache[n]
-        
-        self.cache[n] = self.fib(n-1) + self.fib(n-2)
-        
-        return self.cache[n]
+        return n if n <= 1 else self.fib(n - 2) + self.fib(n - 1)
         

@@ -1,23 +1,29 @@
 # The guess API is already defined for you.
 # @param num, your guess
-# @return -1 if my number is lower, 1 if my number is higher, otherwise return 0
+# @return -1 if num is higher than the picked number
+#          1 if num is lower than the picked number
+#          otherwise return 0
 # def guess(num: int) -> int:
 
-# def get_num(i, j):
-#     return (i+j)>>1
-
+# Approach 2: Binary Search
+    
+# Time: O(log n)
+# Space: O(1)
+    
 class Solution:
     def guessNumber(self, n: int) -> int:
-        i, j = 1, n+1
+        low, high = 1, n
         
-        while True:
-            num = (i+j)>>1
-            pick = guess(num)
-            if pick == 0:
-                return num
-            elif pick == -1:
-                j = num
+        while low <= high:
+            mid = low + (high - low) // 2
+            res = guess(mid)
+            
+            if res == 0:
+                return mid
+            elif res < 0:
+                high = mid - 1
             else:
-                i = num
+                low = mid + 1
                 
+        return -1
         

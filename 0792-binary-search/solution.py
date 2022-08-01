@@ -1,15 +1,20 @@
+# Approach 1 - Binary Search
+
+# Time: O(log N)
+# Space: O(1)
+
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        left, right = 0, len(nums)-1
+        left, right = 0, len(nums) - 1
         
         while left <= right:
-            middle = left + (right-left) // 2
-            if nums[middle] == target:
-                return middle
-            elif target < nums[middle]:
-                right = middle - 1
+            pivot = left + (right - left) // 2
+            if nums[pivot] == target:
+                return pivot
+            elif target < nums[pivot]:
+                right = pivot - 1
             else:
-                left = middle + 1
+                left = pivot + 1
+                
         return -1
-            
         

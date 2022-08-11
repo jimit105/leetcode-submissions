@@ -1,5 +1,5 @@
-# Approach 1 - Recursive Traversal with Valid Range
-
+# Approach 1: Recursive Traversal with Valid Range
+    
 # Time: O(N)
 # Space: O(N)
 

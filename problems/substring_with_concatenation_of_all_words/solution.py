@@ -1,5 +1,5 @@
-# Approach 1: Check All Indices using a Hash Table
-
+# Approach 2: Sliding Window
+    
 import collections
 
 class Solution:
@@ -11,29 +11,56 @@ class Solution:
         word_count = collections.Counter(words)
         
         
-        def check(i):
-            # Copy the original dictionary to use, for this index
-            remaining = word_count.copy()
+        def sliding_window(left):
+            words_found = collections.defaultdict(int)
             words_used = 0
+            excess_word = False
             
-            # Each iteration will check for a match in words
-            for j in range(i, i + substring_size, word_length):
-                sub = s[j : j + word_length]
-                if remaining[sub] > 0:
-                    remaining[sub] -= 1
-                    words_used += 1
-                else:
+            for right in range(left, n, word_length):
+                if right + word_length > n:
                     break
                     
-            # Valid if we used all the words
-            return words_used == k
-        
-        answer = []
-        for i in range(n - substring_size + 1):
-            if check(i):
-                answer.append(i)
+                sub = s[right : right + word_length]
                 
+                if sub not in word_count:
+                    # Mismatched word - Reset the window
+                    words_found = collections.defaultdict(int)
+                    words_used = 0
+                    excess_word = False
+                    left = right + word_length # Retry at the next index
+                    
+                else:
+                    # If we reached max window size or have an excess word
+                    while right - left == substring_size or excess_word:
+                        # Move the left bound over continuously
+                        leftmost_word = s[left : left + word_length]
+                        left += word_length
+                        words_found[leftmost_word] -= 1
+                        
+                        if words_found[leftmost_word] == word_count[leftmost_word]:
+                            # This word was the excess word
+                            excess_word = False
+                        else:
+                            # Otherwise we actually needed it
+                            words_used -= 1
+                            
+                    # Keep track of how many times this word occurs in the window
+                    words_found[sub] += 1
+                    if words_found[sub] <= word_count[sub]:
+                        words_used += 1
+                    else:
+                        # Found too many instances already
+                        excess_word = True
+                        
+                    if words_used == k and not excess_word:
+                        # Found a valid substring
+                        answer.append(left)
+                        
+                        
+        answer = []
+        for i in range(word_length):
+            sliding_window(i)
+
         return answer
-            
-            
+
         

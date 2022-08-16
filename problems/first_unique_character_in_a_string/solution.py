@@ -1,10 +1,16 @@
-from collections import Counter
+# Approach 1: Using Counter
+
+# Time: O(N)
+
+import collections
+
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        counts = Counter(s)
+        count = collections.Counter(s)
         
-        for idx, c in enumerate(s):
-            if counts[c] == 1:
+        for idx, ch in enumerate(s):
+            if count[ch] == 1:
                 return idx
-    
+            
         return -1
+        

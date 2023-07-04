@@ -3,8 +3,6 @@
 # Time: O(n)
 # Space: O(1)
     
-from collections import Counter
-
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         a = 0

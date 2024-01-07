@@ -2,6 +2,8 @@
 
 # https://leetcode.com/problems/arithmetic-slices-ii-subsequence/discuss/2851807/Python-two-counting-schemes
 
+from collections import defaultdict
+
 class Solution:
     def numberOfArithmeticSlices(self, nums: List[int]) -> int:
         n = len(nums)

@@ -1,3 +1,8 @@
+# Approach 1:  Recursive
+
+# Time: O(n)
+# Space: O(n)
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -7,8 +12,10 @@
 
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if root is None:
+        if not root:
             return None
-        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
-        return root
         
+        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+
+        return root
+

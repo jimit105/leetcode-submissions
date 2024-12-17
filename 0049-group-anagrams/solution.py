@@ -1,16 +1,19 @@
-# Approach 1 - Categorize by Sorted String
+# Approach 2 - Categorize by count
 
-# Time: O(n k log k), n = length of strs, k = max lenth of string in strs
-# Space: O(n*k)
+# Time: O(n * k), n = length of strs, k = max lenth of string in strs
+# Space: O(n * k)
 
 from collections import defaultdict
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        hashmap = defaultdict(list)
-        
+        ans = defaultdict(list)
+
         for s in strs:
-            hashmap[tuple(sorted(s))].append(s)
-            
-        return hashmap.values()
+            count = [0] * 26
+            for c in s:
+                count[(ord(c) - ord('a'))] += 1
+            ans[tuple(count)].append(s)
+
+        return list(ans.values())
         

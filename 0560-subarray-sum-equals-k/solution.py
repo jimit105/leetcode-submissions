@@ -1,22 +1,20 @@
-# Approach 4 - Using Hashmap
+# Approach 4: Using Hashmap
 
-# Time: O(N)
-# Space: O(N)
+# Time: O(n)
+# Space: O(n)
 
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         count = 0
-        total = 0
-                
-        hashmap = {} # {sum_i : no. of occurrences of sum_i}
-        hashmap[0] = 1
-        
-        for i in range(len(nums)):
-            total += nums[i]
-            
-            if (total - k) in hashmap.keys():
-                count += hashmap.get(total - k)
-            hashmap[total] = hashmap.get(total, 0) + 1
-            
+        prefix_sum = 0
+        sum_freq = {}
+        sum_freq[0] = 1
+
+        for num in nums:
+            prefix_sum += num
+            if prefix_sum - k in sum_freq:
+                count += sum_freq[prefix_sum - k]
+            sum_freq[prefix_sum] = sum_freq.get(prefix_sum, 0) + 1
+
         return count
         

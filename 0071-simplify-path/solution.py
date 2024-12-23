@@ -1,7 +1,7 @@
-# Approach: Using Stacks
+# Approach: Stacks
 
-# Time: O(N), N = number of characters in the original path
-# Space: O(N)
+# Time: O(n)
+# Space: O(n)
 
 class Solution:
     def simplifyPath(self, path: str) -> str:
@@ -14,8 +14,7 @@ class Solution:
             elif portion == '.' or not portion:
                 continue
             else:
-                    stack.append(portion)
+                stack.append(portion)
 
         return '/' + '/'.join(stack)
-
-
+        

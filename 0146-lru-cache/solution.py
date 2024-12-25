@@ -1,29 +1,32 @@
-# Approach 1 - Ordered Dictionary
+# Approach 2: Built-in
 
-# Time: O(1)
+# Time: O(1), for both get and put
 # Space: O(capacity)
 
 from collections import OrderedDict
 
-class LRUCache(OrderedDict):
+class LRUCache:
 
     def __init__(self, capacity: int):
         self.capacity = capacity
+        self.dic = OrderedDict()
         
 
     def get(self, key: int) -> int:
-        if key not in self:
+        if key not in self.dic:
             return -1
-        self.move_to_end(key)
-        return self[key]
+
+        self.dic.move_to_end(key)
+        return self.dic[key]
         
 
     def put(self, key: int, value: int) -> None:
-        if key in self:
-            self.move_to_end(key)
-        self[key] = value
-        if len(self) > self.capacity:
-            self.popitem(last = False)
+        if key in self.dic:
+            self.dic.move_to_end(key)
+
+        self.dic[key] = value
+        if len(self.dic) > self.capacity:
+            self.dic.popitem(last=False)
         
 
 

@@ -1,7 +1,7 @@
 # Approach 1: Depth First Search (Recursive)
 
-# Time: O(N)
-# Space: O(N)
+# Time: O(n)
+# Space: O(n)
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -9,10 +9,10 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
 class Solution:
     def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
         ans = 0
+
         def dfs(node):
             nonlocal ans
             if node:
@@ -25,3 +25,4 @@ class Solution:
 
         dfs(root)
         return ans
+        

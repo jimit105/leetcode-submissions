@@ -1,9 +1,6 @@
 name: Sync Leetcode Submissions
 
 on:
-  push:
-    branches:
-    - main
   workflow_dispatch:
   schedule:
     - cron:  '0 17 * * *'

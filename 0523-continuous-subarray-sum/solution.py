@@ -1,4 +1,4 @@
-# Approach 1: Prefix Sum and Hashing
+# Approach 1: Prefix sum and Hashing
 
 # Time: O(n)
 # Space: O(n)
@@ -6,8 +6,8 @@
 class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
         prefix_mod = 0
-        mod_seen = {0: -1}
-        
+        mod_seen = {0 : -1}
+
         for i in range(len(nums)):
             prefix_mod = (prefix_mod + nums[i]) % k
 
@@ -20,3 +20,4 @@ class Solution:
                 mod_seen[prefix_mod] = i
 
         return False
+        

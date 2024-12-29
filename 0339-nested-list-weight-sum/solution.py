@@ -1,4 +1,8 @@
-# Approach 1: Depth-first Search
+# Approach 1: Depth First Search
+
+# n = total no. of nested elements
+# Time: O(n)
+# Space: O(n)
 
 # """
 # This is the interface that allows for creating nested lists.
@@ -45,15 +49,14 @@
 
 class Solution:
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
-        
-        def dfs(nested_list, depth):
+        def dfs(nestedList, depth):
             total = 0
-            for nested in nested_list:
-                if nested.isInteger():
-                    total += nested.getInteger() * depth
+            for element in nestedList:
+                if element.isInteger():
+                    total += element.getInteger() * depth
                 else:
-                    total += dfs(nested.getList(), depth + 1)
+                    total += dfs(element.getList(), depth + 1)
             return total
-        
+
         return dfs(nestedList, 1)
         

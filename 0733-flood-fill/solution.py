@@ -1,28 +1,28 @@
-# Approach 1 - Depth-First Search
+# Approach 1: Depth First Search
 
-# Time: O(N)
-# Space: O(N)
+# Time: O(n)
+# Space: O(n)
 
 class Solution:
-    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
         R, C = len(image), len(image[0])
-        color = image[sr][sc]
-        if color == newColor:
+        curr_color = image[sr][sc]
+        if curr_color == color:
             return image
-        
+
         def dfs(r, c):
-            if image[r][c] == color:
-                image[r][c] = newColor
+            if image[r][c] == curr_color:
+                image[r][c] = color
+                
                 if r >= 1:
-                    dfs(r-1, c)
-                if r+1 < R:
-                    dfs(r+1, c)
+                    dfs(r - 1, c)
+                if r + 1 < R:
+                    dfs(r + 1, c)
                 if c >= 1:
-                    dfs(r, c-1)
-                if c+1 < C:
-                    dfs(r, c+1)
-                    
+                    dfs(r, c - 1)
+                if c + 1 < C:
+                    dfs(r, c + 1)
+
         dfs(sr, sc)
         return image
-            
         

@@ -1,7 +1,7 @@
-# Approach 2 - Floyd's Cycle Finding Algorithm
+# Approach 2: Floyd's Tortoise and Hare Algorithm
 
-# Time: O(n), Space: O(1)
-
+# Time: O(n)
+# Space: O(1)
 
 # Definition for singly-linked list.
 # class ListNode:
@@ -10,32 +10,20 @@
 #         self.next = None
 
 class Solution:
-    
-    def get_intersect(self, head):
-        slow = head
-        fast = head
-        
-        while fast is not None and fast.next is not None:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = fast = head
+
+        while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
+
             if slow == fast:
+                # Found intersection, find cycle start
+                slow = head
+
+                while slow != fast:
+                    slow = slow.next
+                    fast = fast.next
                 return slow
-            
         return None
-    
-    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if head is None:
-            return None
         
-        intersect = self.get_intersect(head)
-        if intersect is None:
-            return None
-        
-        ptr1 = head
-        ptr2 = intersect
-        while ptr1 != ptr2:
-            ptr1 = ptr1.next
-            ptr2 = ptr2.next
-            
-        return ptr1
-   

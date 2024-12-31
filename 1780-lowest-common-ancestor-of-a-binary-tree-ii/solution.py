@@ -1,4 +1,4 @@
-# Approach: Recursive approach from Lowest Common Ancestor of a Binary Tree (https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+# Approach 1: Depth First Search
 
 # Time: O(n)
 # Space: O(n)
@@ -11,30 +11,42 @@
 #         self.right = None
 
 class Solution:
-
-    def __init__(self):
-        self.ans = None
-
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-
-        def recurse_tree(curr_node) -> bool:
-            # If reached end of branch, return False
-            if not curr_node:
+        def dfs(node, target):
+            # Base case: target found
+            if node == target:
+                return True
+            # Base case: reached null, target not found
+            if node is None:
                 return False
+            # Recursive case: search target in left or right subtree
+            return dfs(node.left, target) or dfs(node.right, target)
 
-            left = recurse_tree(curr_node.left)
-            right = recurse_tree(curr_node.right)
+        def LCA(node, p, q):
+            if node is None or node == p or node == q:
+                return node
 
-            # If the current node is one of p or q
-            mid = curr_node == p or curr_node == q
+            left = LCA(node.left, p, q)
+            right = LCA(node.right, p, q)
 
-            # If any two of the three flags (left, right, mid) become True
-            if mid + left + right >= 2:
-                self.ans = curr_node
+            # If p and q are found in different subtrees, current node is their LCA
+            if left and right:
+                return node
+            elif left:
+                return left
+            else:
+                return right
+        
+        # Step 1: Find the lowest common ancestor of nodes p and q
+        ans = LCA(root, p, q)
 
-            # Return true if either of the three bool values is True
-            return mid or left or right
+        # Step 2: Check if the LCA is p, meaning q must be in p's subtree
+        if ans == p:
+            return p if dfs(p, q) else None
 
-        recurse_tree(root)
-        return self.ans
+        # Step 3: Check if the LCA is q, meaning p must be in q's subtree
+        elif ans == q:
+            return q if dfs(q, p) else None
 
+        # Step 4: If neither p nor q is the ancestor of the other, return the LCA
+        return ans

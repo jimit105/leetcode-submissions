@@ -1,7 +1,7 @@
-# Approach 1 - Recursive Approach
+# Approach 1: Recursive
 
-# Time: O(N)
-# Space: O(N)
+# Time: O(n)
+# Space: O(n)
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -13,18 +13,15 @@
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         parent_val = root.val
-        
         p_val = p.val
         q_val = q.val
-        
-        # if both values are greater than root value, search in right subtree
+
+        # If both p and q are greater than parent
         if p_val > parent_val and q_val > parent_val:
             return self.lowestCommonAncestor(root.right, p, q)
-        
-        # if both values are lesser than root value, search in left subtree
+        # If both p and q are lesser than parent
         elif p_val < parent_val and q_val < parent_val:
             return self.lowestCommonAncestor(root.left, p, q)
-        
+        # We have found the split point, i.e. the LCA node.
         else:
             return root
-        

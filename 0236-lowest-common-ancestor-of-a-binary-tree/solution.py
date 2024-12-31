@@ -1,7 +1,7 @@
 # Approach 1: Recursive
 
 # Time: O(n)
-# Space: O(n)
+# Space: O(h), h = height of the tree
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -11,30 +11,21 @@
 #         self.right = None
 
 class Solution:
-
-    def __init__(self):
-        self.ans = None
-
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # Base case: if root is None or root is one of the nodes we're looking for
+        if root is None or root == p or root == q:
+            return root
 
-        def recurse_tree(curr_node) -> bool:
-            # If reached end of branch, return False
-            if not curr_node:
-                return False
+        # Recursively search in left and right subtrees
+        left = self.lowestCommonAncestor(root.left, p , q)
+        right= self.lowestCommonAncestor(root.right, p, q)
 
-            left = recurse_tree(curr_node.left)
-            right = recurse_tree(curr_node.right)
+        # If both left and right return non-null values,
+        # then current node is the LCA
+        if left and right:
+            return root
 
-            # If the current node is one of p or q
-            mid = curr_node == p or curr_node == q
-
-            # If any two of the three flags (left, right, mid) become True
-            if mid + left + right >= 2:
-                self.ans = curr_node
-
-            # Return true if either of the three bool values is True
-            return mid or left or right
-
-        recurse_tree(root)
-        return self.ans
-
+        # If only one side returns a non-null value,
+        # return that value up the tree
+        return left if left else right
+        

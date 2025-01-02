@@ -2,6 +2,7 @@
 
 # Time: O(n)
 # Space: O(n)
+
 """
 # Definition for a Node.
 class Node:
@@ -12,23 +13,23 @@ class Node:
 """
 
 class Solution:
-    def __init__(self) -> None:
-        self.visited_hash = {}
+    def __init__(self):
+        # Dictionary which holds old nodes as keys and new nodes as its values.
+        self.visitedHash = {}
 
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        if head == None:
+        if head is None:
             return None
 
-        if head in self.visited_hash:
-            return self.visited_hash[head]
+        # If we have already processed the current node, then we simply return the cloned version of it
+        if head in self.visitedHash:
+            return self.visitedHash[head]
 
         node = Node(head.val, None, None)
-
-        self.visited_hash[head] = node
+        self.visitedHash[head] = node
 
         node.next = self.copyRandomList(head.next)
         node.random = self.copyRandomList(head.random)
 
         return node
-
         

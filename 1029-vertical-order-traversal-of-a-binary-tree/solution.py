@@ -1,11 +1,7 @@
-# Approach 1: BFS/DFS with Global Sorting
+# Approach 2: BFS with Partition Sorting
 
-# Time: O(N log N)
-# Space: O(N)
-    
-# BFS
-
-from collections import deque, OrderedDict
+# Time: O(n log n)
+# Space: O(n)
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -14,31 +10,30 @@ from collections import deque, OrderedDict
 #         self.left = left
 #         self.right = right
 
+from collections import deque, defaultdict
+
 class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
-        node_list = []
-        
-        def BFS(root):
-            queue = deque([(root, 0, 0)])
-            
-            while queue:
-                node, row, col = queue.popleft()
-                if node is not None:
-                    node_list.append((col, row, node.val))
-                    queue.append((node.left, row + 1, col - 1))
-                    queue.append((node.right, row + 1, col + 1))
-                    
-        BFS(root)
-        
-        node_list.sort()
-        
-        result = OrderedDict()
-        for col, row, value in node_list:
-            if col in result:
-                result[col].append(value)
-            else:
-                result[col] = [value]
-                
-        
-        return result.values()
-        
+        if root is None:
+            return []
+
+        columnTable = defaultdict(list)        
+        min_column = max_column = 0
+
+        queue = deque([(root, 0, 0)])
+
+        while queue:
+            node, row, column = queue.popleft()
+            if node is not None:
+                columnTable[column].append((row, node.val))
+                min_column = min(min_column, column)
+                max_column = max(max_column, column)
+
+                queue.append((node.left, row + 1, column - 1))
+                queue.append((node.right, row + 1, column + 1))
+
+        result = []
+        for col in range(min_column, max_column + 1):
+            result.append([val for row, val in sorted(columnTable[col])])
+
+        return result

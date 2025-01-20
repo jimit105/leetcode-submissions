@@ -1,38 +1,48 @@
 # Approach: Depth First Search
-# https://leetcode.com/problems/word-search/discuss/2843501/PythonC%2B%2B-faster-than-99-DFS-(explained) 
 
-from collections import Counter
-from itertools import chain
+# n = no. of rows, m = no. of columns, l = length of word
+# Time: O(n * m * 4^l)
+# Space: O(l)
 
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        m, n = len(board), len(board[0])
-        
-        if len(word) > m * n:
+        if not board or not word:
             return False
-        
-        # not enough letters on the board
-        if not (cnt := Counter(word)) <= Counter(chain(*board)):
-            return False
-        
-        # Inverse word if it is better to start from the end
-        if cnt[word[0]] > cnt[word[-1]]:
-            word = word[::-1]
-            
-            
-        def dfs(i, j, s):
-            if s == len(word):
+
+        rows, cols = len(board), len(board[0])
+
+        def dfs(i, j, k):
+            # Base case: we've matched all characters in word
+            if k == len(word):
                 return True
-            
-            if 0 <= i < m and 0 <= j < n and board[i][j] == word[s]:
-                board[i][j] = '#'
-                adj = [(i, j+1), (i, j-1), (i+1, j), (i-1, j)]
-                dp = any(dfs(ii, jj, s+1) for ii, jj in adj)
-                board[i][j] = word[s]
-                return dp
-            
-            return False
-        
-        return any(dfs(i, j, 0) for i, j in product(range(m), range(n)))
+
+            # Check boundaries and if current cell matches current character
+            if (i < 0 or i >= rows or
+                j < 0 or j >= cols or
+                board[i][j] != word[k]):
+                return False
+
+            # Mark as visited
+            temp = board[i][j]
+            board[i][j] = '#'
+
+            # Try all four directions
+            result = (dfs(i + 1, j, k + 1) or # down
+                     dfs(i - 1, j, k + 1) or  # up
+                     dfs(i, j + 1, k + 1) or # right
+                     dfs(i, j - 1, k + 1)) # left
+
+            # Restore the cell
+            board[i][j] = temp
+
+            return result
+
+        for i in range(rows):
+            for j in range(cols):
+                if board[i][j] == word[0]:
+                    if dfs(i, j, 0):
+                        return True
+
+        return False
             
         

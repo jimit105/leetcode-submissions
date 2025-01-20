@@ -1,7 +1,7 @@
-# Approach 1 - Recursion
+# Approach 1: Recursion
 
-# Time: O(N)
-# Space: O(N) in worst case, O(log N) in best case
+# Time: O(n)
+# Space: O(n) in worst base, O(log n) in best case
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -9,15 +9,15 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root:
             return False
-        
+
         targetSum -= root.val
-        if not root.left and not root.right:
+
+        if not root.left and not root.right: # reached leaf
             return targetSum == 0
-        
+
         return self.hasPathSum(root.left, targetSum) or self.hasPathSum(root.right, targetSum)
         

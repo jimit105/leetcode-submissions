@@ -1,22 +1,24 @@
+# Approach 2: Prefix and Suffix Products
+
+# Time: O(n)
+# Space: O(1)
+
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         n = len(nums)
-        
-        answer = [0] * n
-        
-        answer[0] = 1
-        for i in range(1, n):
-            answer[i] = answer[i-1] * nums[i-1]
-            
-        right = 1
-        for i in range(n-1, -1, -1):
-            answer[i] = answer[i] * right
-            right *= nums[i]
+        ans = [1] * n
 
-        return answer
-    
-# Time: O(n) - traversing the elements two times independently
-# Space: O(1) - one additional variable - right
-    
-            
+        # Calculate prefix products
+        prefix = 1
+        for i in range(n):
+            ans[i] = prefix
+            prefix *= nums[i]
+
+        # Calculate suffix products and combine with prefix products
+        suffix = 1
+        for i in range(n - 1, -1, -1):
+            ans[i] *= suffix
+            suffix *= nums[i]
+
+        return ans
         

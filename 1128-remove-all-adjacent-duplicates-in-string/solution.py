@@ -1,17 +1,17 @@
 # Approach 2: Stack
 
-# Time: O(N)
-# Space: O(N - D), D = length of all duplicates
+# n = string length, d = total length of all duplicates
+# Time: O(n)
+# Space: O(n - d)
 
 class Solution:
     def removeDuplicates(self, s: str) -> str:
-        output = []
-        
+        stack = []
         for ch in s:
-            if output and ch == output[-1]:
-                output.pop()
+            if stack and ch == stack[-1]:
+                stack.pop()
             else:
-                output.append(ch)
-                
-        return ''.join(output)
+                stack.append(ch)
+
+        return ''.join(stack)
         

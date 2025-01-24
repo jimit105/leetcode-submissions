@@ -1,45 +1,39 @@
-# Approach 2: Depth First Search
+# Approach: Depth First Search
 
-# Time: O(m + n), n = no. of nodes, m = no. of edges
-# Space: O(m + n)
+# V = no. of vertices, E = no. of edges
+# Time: O(V + E)
+# Space: O(V)
 
 class Solution:
-    # returns boolean indicating whether `node` is unsafe
-    def dfs(self, node, adj, visit, in_stack) -> bool:
-        if in_stack[node]:
-            return True
-        
-        if visit[node]:
-            return False
-
-        visit[node] = True
-        in_stack[node] = True
-
-        for neighbor in adj[node]:
-            if self.dfs(neighbor, adj, visit, in_stack):
-                return True
-
-        in_stack[node] = False
-        return False
-
-
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
         n = len(graph)
-        adj = [[] for _ in range(n)]
+        # 0: unvisited, 1: visiting, 2: safe
+        state = [0] * n
+        safe = []
+
+        def dfs(node):
+            # If node is being visited, we found a cycle
+            if state[node] == 1:
+                return False
+
+            # If node has been fully visited, return if it's safe
+            if state[node] == 2:
+                return True
+
+            # Mark node as being visited
+            state[node] = 1
+
+            for neighbor in graph[node]:
+                if not dfs(neighbor):
+                    return False
+
+            # Mark node as safe
+            state[node] = 2
+            return True
 
         for i in range(n):
-            for node in graph[i]:
-                adj[i].append(node)
-
-        visit = [False] * n
-        in_stack = [False] * n
-
-        for i in range(n):
-            self.dfs(i, adj, visit, in_stack)
-
-        safe_nodes = []
-        for i in range(n):
-            if not in_stack[i]:
-                safe_nodes.append(i)
-
-        return safe_nodes
+            if dfs(i):
+                safe.append(i)
+        
+        return safe
+        

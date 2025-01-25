@@ -1,4 +1,18 @@
+# Approach: One Pass
+
+# Time: O(n)
+# Space: O(1)
+
 class Solution:
     def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
-        return max(map(len, ''.join(map(str, nums)).split('0')))
+        count = max_count = 0
+
+        for num in nums:
+            if num == 1:
+                count += 1
+            else:
+                max_count = max(max_count, count)
+                count = 0
+
+        return max(max_count, count)
         

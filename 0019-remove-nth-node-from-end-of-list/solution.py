@@ -1,6 +1,7 @@
-# Approach 2 - One Pass Algorithm
+# Approach 2: One Pass algorithm
 
-# Time: O(L), L = no. of nodes
+# L = length of linked list
+# Time: O(L)
 # Space: O(1)
 
 # Definition for singly-linked list.
@@ -8,22 +9,21 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        dummy = ListNode(val=0, next=head)
-        
+        dummy = ListNode(0)
+        dummy.next = head
+
         first = dummy
         second = dummy
-        
-        # Advances first pointer so that the gap between first and second is n nodes apart
-        for i in range(n+1):
+
+        for i in range(n + 1):
             first = first.next
-        
-        # Move first to the end, maintaining the gap
+
         while first is not None:
             first = first.next
             second = second.next
-            
+
         second.next = second.next.next
         return dummy.next
-        

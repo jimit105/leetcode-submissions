@@ -1,7 +1,9 @@
-# Approach 1: Implementing Parent Pointers
+# Approach 2: Depth-First Search on Equivalent Graph
 
 # Time: O(n)
 # Space: O(n)
+
+from collections import defaultdict
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -12,27 +14,33 @@
 
 class Solution:
     def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
-        def add_parent(curr, parent):
-            if curr:
-                curr.parent = parent
-                add_parent(curr.left, curr)
-                add_parent(curr.right, curr)
-        add_parent(root, None)
+        graph = defaultdict(list)
+
+        # Recursively build the undirected graph from the given binary tree
+        def build_graph(curr, parent):
+            if curr and parent:
+                graph[curr.val].append(parent.val)
+                graph[parent.val].append(curr.val)
+            if curr.left:
+                build_graph(curr.left, curr)
+            if curr.right:
+                build_graph(curr.right, curr)
+
+        build_graph(root, None)
 
         answer = []
-        visited = set()
+        visited = set([target.val])
 
         def dfs(curr, distance):
-            if not curr or curr in visited:
+            if distance == k:
+                answer.append(curr)
                 return
-            visited.add(curr)
-            if distance == 0:
-                answer.append(curr.val)
-                return
-            dfs(curr.parent, distance - 1)
-            dfs(curr.left, distance - 1)
-            dfs(curr.right, distance - 1)
+            for neighbor in graph[curr]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    dfs(neighbor, distance + 1)
 
-        dfs(target, k)
+        dfs(target.val, 0)
 
         return answer
+        

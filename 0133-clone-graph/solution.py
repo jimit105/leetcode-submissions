@@ -1,7 +1,8 @@
-# Approach 2 - Breadth First Search
+# Approach 1: Depth First Search
 
-# Time: O(N + M), N = no. of nodes, M = no. of edges
-# Space: O(N)
+# n = no. of nodes, m = no. of edges
+# Time: O(n + m)
+# Space: O(n)
 
 """
 # Definition for a Node.
@@ -11,28 +12,24 @@ class Node:
         self.neighbors = neighbors if neighbors is not None else []
 """
 
-from collections import deque
-
+from typing import Optional
 class Solution:
-    def cloneGraph(self, node: 'Node') -> 'Node':
+    def __init__(self):
+        self.visited = {} # {node: clone_node}
+
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         if not node:
             return node
-        
-        visited = {} # node: clone
-        
-        queue = deque([node])
-        
-        visited[node] = Node(node.val, [])
-        
-        while queue:
-            n = queue.popleft()
-            
-            for neighbor in n.neighbors:
-                if neighbor not in visited:
-                    visited[neighbor] = Node(neighbor.val, [])
-                    queue.append(neighbor)
-                    
-                visited[n].neighbors.append(visited[neighbor])
-                
-        return visited[node]
+
+        if node in self.visited:
+            return self.visited[node]
+
+        clone_node = Node(node.val, [])
+
+        self.visited[node] = clone_node
+
+        if node.neighbors:
+            clone_node.neighbors = [self.cloneGraph(n) for n in node.neighbors]
+
+        return clone_node
         

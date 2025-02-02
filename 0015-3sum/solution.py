@@ -1,6 +1,7 @@
 # Approach 1 - Two Pointers
 
 # Time: O(n^2)
+# Space: O(log n) for sorting
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:

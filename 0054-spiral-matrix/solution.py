@@ -1,33 +1,34 @@
-# Approach: Set Up Boundaries
+# Approach 1: Set Up Boundaries
 
-# Time: O(m * n), m = number of rows, n = number of columns
+# Time: O(m * n)
 # Space: O(1)
 
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
         result = []
-        rows, columns = len(matrix), len(matrix[0])
-        up = 0
-        left = 0
-        right = columns - 1
+        rows, cols = len(matrix), len(matrix[0])
+        up = left = 0
+        right = cols - 1
         down = rows - 1
 
-        while len(result) < rows * columns:
-            # Left to Right
+        while len(result) < rows * cols:
+            # Traverse left to right
             for col in range(left, right + 1):
                 result.append(matrix[up][col])
 
-            # Downwards
+            # Traverse downwards
             for row in range(up + 1, down + 1):
                 result.append(matrix[row][right])
 
+            # Make sure we are on a different row
             if up != down:
-                # Right to Left
+                # Traverse right to left
                 for col in range(right - 1, left - 1, -1):
                     result.append(matrix[down][col])
 
+            # Make sure we are on a different col
             if left != right:
-                # Upwards
+                # Traverse upwards
                 for row in range(down - 1, up, -1):
                     result.append(matrix[row][left])
 
@@ -37,3 +38,5 @@ class Solution:
             down -= 1
 
         return result
+
+        

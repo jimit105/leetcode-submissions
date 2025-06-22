@@ -1,9 +1,16 @@
+# Time: O(max(n, k))
+# Space: O(1)
+
 class Solution:
     def divideString(self, s: str, k: int, fill: str) -> List[str]:
-        additional_chars = len(s) % k
-        if additional_chars != 0:
-            additional_chars = k - additional_chars
-        s += fill * additional_chars
-          
-        return [s[i: i+k] for i in range(0, len(s), k)]
-        
+        res = []
+        n = len(s)
+        curr = 0
+
+        while curr < n:
+            res.append(s[curr : curr + k])
+            curr += k
+
+        res[-1] += fill * (k - len(res[-1]))
+        return res
+

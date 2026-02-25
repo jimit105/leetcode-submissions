@@ -1,14 +1,18 @@
-# Approach 1: Store Indexes
+# Approach 2: One Pass
 
 # Time: O(log n)
-# Space: O(log n)
+# Space: O(1)
 
 class Solution:
     def binaryGap(self, n: int) -> int:
-        A = [i for i in range(32) if (n >> i) & 1]
+        last = None
+        ans = 0
 
-        if len(A) < 2:
-            return 0
-        
-        return max(A[i + 1] - A[i] for i in range(len(A) - 1))
+        for i in range(32):
+            if (n >> i) & 1:
+                if last is not None:
+                    ans = max(ans, i - last)
+                last = i
+
+        return ans
         
